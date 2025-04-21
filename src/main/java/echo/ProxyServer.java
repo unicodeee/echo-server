@@ -15,10 +15,30 @@ public class ProxyServer extends Server {
 
     public RequestHandler makeHandler(Socket s) {
         // make a proxy handler and call initPeer
-        ProxyHandler handler = new ProxyHandler(s);
-        handler.initPeer(peerHost, peerPort);
-        return handler;
+        try {
+            // Create an instance of the handler type
+            ProxyHandler handler = (ProxyHandler) handlerType.getDeclaredConstructor().newInstance();
+            // Set handler's socket to s
+            handler.setSocket(s);
+            // Initialize the peer connection
+            handler.initPeer(peerHost, peerPort);
+
+            if (DEBUG) System.out.println("Created proxy handler with peer at " + peerHost + ":" + peerPort);
+
+            // Return handler
+            return handler;
+        } catch (Exception e) {
+            System.err.println("Error creating proxy handler: " + e.getMessage());
+            try {
+                s.close();
+            } catch (java.io.IOException ioe) {
+                // Ignore
+            }
+            return null;
+        }
     }
+
+
 
     public static void main(String[] args) {
         int port = 5555;

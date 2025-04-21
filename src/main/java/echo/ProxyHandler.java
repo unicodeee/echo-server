@@ -25,4 +25,10 @@ public class ProxyHandler extends RequestHandler {
         // resurn peer's response
         return peer.receive();
     }
+
+    @Override
+    protected void shutDown() {
+        peer.send("quit");
+    }
+
 }

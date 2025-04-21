@@ -31,7 +31,6 @@ public class Server {
                 if (DEBUG) {
                     System.out.println("Starting handler: " + handler.toString());
                 }
-                handler.run();
             // start handler in its own thread
                 Thread thread = new Thread(handler);
                 thread.start();
@@ -58,8 +57,8 @@ public class Server {
 
     public static void main(String[] args) {
         int port = 5555;
-//        String service = "echo.RequestHandler";
-        String service = "casino.CasinoHandler";
+        String service = "echo.RequestHandler";
+//        String service = "casino.CasinoHandler";
         if (1 <= args.length) {
             service = args[0];
         }

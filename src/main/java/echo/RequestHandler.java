@@ -38,12 +38,13 @@ public class RequestHandler extends echo.Correspondent implements Runnable {
                 send(response(request));
                 // send response
                 // sleep
-                Thread.sleep(500);
+                Thread.sleep(10);
             } catch(Exception e) {
                 send(e.getMessage() + "... ending session");
                 break;
             }
         }
         // close
+        close();
     }
 }
