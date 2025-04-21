@@ -26,6 +26,7 @@ public class RequestHandler extends echo.Correspondent implements Runnable {
             try {
                 String request = receive();
                 // receive request
+                if (Server.DEBUG) System.out.println("received request: " + request);
                 if(request.equals("quit")) {
                     shutDown();
                     break;
@@ -37,6 +38,7 @@ public class RequestHandler extends echo.Correspondent implements Runnable {
                 send(response(request));
                 // send response
                 // sleep
+                Thread.sleep(500);
             } catch(Exception e) {
                 send(e.getMessage() + "... ending session");
                 break;
