@@ -1,4 +1,4 @@
-package org.run;
+package echo;
 
 import java.net.Socket;
 
@@ -24,11 +24,16 @@ public class RequestHandler extends echo.Correspondent implements Runnable {
     public void run() {
         while(active) {
             try {
+                String request = receive();
                 // receive request
                 if(request.equals("quit")) {
                     shutDown();
                     break;
                 }
+                if(request.equals("who")) {
+                    send(toString());
+                }
+                send(request);
                 // send response
                 // sleep
             } catch(Exception e) {

@@ -1,4 +1,4 @@
-package org.run;
+package echo;
 
 import java.net.Socket;
 
@@ -15,12 +15,13 @@ public class ProxyHandler extends RequestHandler {
     }
 
     public void initPeer(String host, int port) {
-        peer = new Correspondent();
+        peer = new echo.Correspondent();
         peer.requestConnection(host, port);
     }
 
     protected String response(String msg) throws Exception {
         // forward msg to peer
         // resurn peer's response
+        return msg;
     }
 }

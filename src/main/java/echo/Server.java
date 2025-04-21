@@ -1,7 +1,6 @@
-package org.run;
+package echo;
 
-import java.util.*;
-import java.io.*;
+import java.lang.reflect.Method;
 import java.net.*;
 
 public class Server {
@@ -26,21 +25,38 @@ public class Server {
     public void listen() {
         while(true) {
             // accept a connection
+            try {
             // make handler
+                RequestHandler handler = makeHandler(mySocket.accept());
+                if (DEBUG) {
+                    System.out.println("Starting handler: " + handler.toString());
+                }
+                handler.run();
             // start handler in its own thread
+                Thread thread = new Thread(handler);
+            }
+            catch(Exception e) {
+                System.err.println(e.getMessage());
+            }
         } // while
     }
 
-    public RequestHandler makeHandler(Socket s) {
-//         handler = handlerType.getDeclaredConstructor().newInstance()
-//        // set handler's socket to s
-//         return handler;
+    public RequestHandler makeHandler(Socket s)  {
+        try{
+            RequestHandler handler = (RequestHandler) handlerType.getDeclaredConstructor().newInstance();
+            handler.setSocket(s);
+            return handler;
+        }
+        catch (Exception e) {
+            System.err.println(e.getMessage());
+            return null;
+        }
     }
 
 
 
     public static void main(String[] args) {
-        int port = 5555;
+        int port = 3000;
         String service = "echo.RequestHandler";
         if (1 <= args.length) {
             service = args[0];
