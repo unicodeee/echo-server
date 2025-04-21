@@ -30,10 +30,11 @@ public class RequestHandler extends echo.Correspondent implements Runnable {
                     shutDown();
                     break;
                 }
-                if(request.equals("who")) {
+                else if (request.equals("who")) {
                     send(toString());
                 }
-                send(request);
+
+                send(response(request));
                 // send response
                 // sleep
             } catch(Exception e) {

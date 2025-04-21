@@ -15,7 +15,9 @@ public class ProxyServer extends Server {
 
     public RequestHandler makeHandler(Socket s) {
         // make a proxy handler and call initPeer
-        return null;
+        ProxyHandler handler = new ProxyHandler(s);
+        handler.initPeer(peerHost, peerPort);
+        return handler;
     }
 
     public static void main(String[] args) {
